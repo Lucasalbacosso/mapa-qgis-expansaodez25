@@ -14,14 +14,12 @@
     :root{
       --primary:#2563EB;--primary-dark:#1E40AF;
       --a:#EF4444;--b:#10B981;--c:#8B5CF6;
-      --run:#F59E0B;--football:#3B82F6;
+      --run:#F59E0B;--futevolei:#3B82F6;--cardio:#EC4899;
       --bg:#F1F5F9;--card:#fff;--text:#1E293B;--muted:#64748B;--border:#E2E8F0;
       --nav:64px;--safe:env(safe-area-inset-bottom,0px);
     }
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
     .app{max-width:430px;margin:0 auto;position:relative;min-height:100vh}
-
-    /* SCREENS */
     .screen{display:none;padding:16px 16px calc(var(--nav) + var(--safe) + 20px)}
     .screen.active{display:block}
 
@@ -45,7 +43,7 @@
     .hero .label{font-size:11px;opacity:.75;font-weight:600;text-transform:uppercase;letter-spacing:.6px}
     .hero .wname{font-size:30px;font-weight:800;margin-top:4px;line-height:1.1}
     .hero .wdesc{font-size:14px;opacity:.85;margin-top:6px}
-    .hero-btn{margin-top:18px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:12px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;letter-spacing:.2px}
+    .hero-btn{margin-top:18px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:12px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%}
     .hero-btn:active{background:rgba(255,255,255,.28)}
 
     /* WEEK GRID */
@@ -58,7 +56,8 @@
     .wdd.dB{background:var(--b);color:#fff}
     .wdd.dC{background:var(--c);color:#fff}
     .wdd.drun{background:var(--run);color:#fff;font-size:14px}
-    .wdd.dfootball{background:var(--football);color:#fff;font-size:14px}
+    .wdd.dfutevolei{background:var(--futevolei);color:#fff;font-size:14px}
+    .wdd.dcardio{background:var(--cardio);color:#fff;font-size:14px}
     .wdd.drest{background:#CBD5E1;color:#fff;font-size:14px}
 
     /* BUTTONS */
@@ -70,16 +69,17 @@
 
     /* TYPE GRID */
     .tg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
-    .tc{border-radius:18px;padding:18px 14px;text-align:center;cursor:pointer;border:2.5px solid transparent;transition:all .18s;position:relative}
+    .tc{border-radius:18px;padding:18px 14px;text-align:center;cursor:pointer;border:2.5px solid transparent;transition:all .18s}
     .tc:active{transform:scale(.96)}
-    .tc-icon{font-size:34px;margin-bottom:8px}
+    .tc-icon{font-size:32px;margin-bottom:8px}
     .tc-name{font-size:15px;font-weight:700}
     .tc-desc{font-size:11px;color:var(--muted);margin-top:2px}
     .tc-A{background:#FEE2E2}.tc-A.sel{border-color:var(--a)}
     .tc-B{background:#D1FAE5}.tc-B.sel{border-color:var(--b)}
     .tc-C{background:#EDE9FE}.tc-C.sel{border-color:var(--c)}
     .tc-run{background:#FEF3C7}.tc-run.sel{border-color:var(--run)}
-    .tc-football{background:#DBEAFE}.tc-football.sel{border-color:var(--football)}
+    .tc-futevolei{background:#DBEAFE}.tc-futevolei.sel{border-color:var(--futevolei)}
+    .tc-cardio{background:#FCE7F3}.tc-cardio.sel{border-color:var(--cardio)}
     .tc-rest{background:#F1F5F9}.tc-rest.sel{border-color:var(--muted)}
 
     /* FORM */
@@ -87,9 +87,10 @@
     .fl{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px;display:block}
     .fi{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:13px;font-size:16px;color:var(--text);background:#fff;outline:none;-webkit-appearance:none}
     .fi:focus{border-color:var(--primary)}
+    .fi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
     /* EXERCISE LIST */
-    .el{max-height:45vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .el{max-height:40vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
     .ei{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);gap:12px;cursor:pointer}
     .ei:last-child{border-bottom:none}
     .eck{width:26px;height:26px;border-radius:8px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
@@ -99,6 +100,9 @@
     .em{font-size:12px;color:var(--muted);margin-top:2px}
     .ei.done .en{text-decoration:line-through;color:var(--muted)}
 
+    /* SECTION DIVIDER */
+    .ex-section{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:10px 0 4px;border-bottom:1px solid var(--border);margin-bottom:2px}
+
     /* HISTORY */
     .hi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
     .hi:last-child{border-bottom:none}
@@ -107,6 +111,7 @@
     .hname{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .hdate{font-size:12px;color:var(--muted);margin-top:2px}
     .hdel{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px 8px;font-size:20px;flex-shrink:0}
+    .kcal-badge{display:inline-block;background:#FEF3C7;color:#D97706;font-size:11px;font-weight:700;padding:1px 7px;border-radius:8px;margin-left:4px}
 
     /* PROGRESS */
     .goal-card{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;border-radius:22px;padding:22px;margin-bottom:14px}
@@ -127,6 +132,11 @@
     .sl{font-size:14px;color:var(--muted)}
     .sv{font-size:16px;font-weight:800}
 
+    /* CALORIE CARD */
+    .cal-card{background:linear-gradient(135deg,#F97316,#EF4444);color:#fff;border-radius:18px;padding:18px;margin-bottom:12px}
+    .cal-num{font-size:44px;font-weight:900;line-height:1}
+    .cal-sub{font-size:13px;opacity:.85;margin-top:4px}
+
     /* STREAK */
     .streak{background:#fff;border-radius:14px;padding:10px 14px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)}
     .snum{font-size:28px;font-weight:900;color:var(--primary);line-height:1}
@@ -138,7 +148,7 @@
 
     /* TOAST */
     @keyframes fadeInOut{0%{opacity:0;transform:translateX(-50%) translateY(12px)}12%{opacity:1;transform:translateX(-50%) translateY(0)}75%{opacity:1}100%{opacity:0}}
-    .toast{position:fixed;bottom:calc(var(--nav) + var(--safe) + 10px);left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:11px 22px;border-radius:22px;font-size:14px;font-weight:600;z-index:999;pointer-events:none;animation:fadeInOut 2.2s ease forwards;white-space:nowrap}
+    .toast{position:fixed;bottom:calc(var(--nav) + var(--safe) + 10px);left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:11px 22px;border-radius:22px;font-size:14px;font-weight:600;z-index:999;pointer-events:none;animation:fadeInOut 2.4s ease forwards;white-space:nowrap}
 
     /* MODAL */
     .moverlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end}
@@ -156,13 +166,10 @@
   <!-- HOME -->
   <div id="s-home" class="screen active">
     <div class="ph">
-      <div>
-        <div class="pt">Olá, Lucas!</div>
-        <div class="ps" id="home-date"></div>
-      </div>
+      <div><div class="pt">Olá, Lucas!</div><div class="ps" id="home-date"></div></div>
       <div id="streak-el"></div>
     </div>
-    <div class="hero" id="hero">
+    <div class="hero">
       <div class="label">HOJE</div>
       <div class="wname" id="h-wname">—</div>
       <div class="wdesc" id="h-wdesc"></div>
@@ -180,17 +187,16 @@
 
   <!-- LOG -->
   <div id="s-log" class="screen">
-    <div class="ph">
-      <div><div class="pt">Registrar</div><div class="ps">O que você fez?</div></div>
-    </div>
+    <div class="ph"><div><div class="pt">Registrar</div><div class="ps">O que você fez?</div></div></div>
     <div id="log-sel">
       <div class="tg">
         <div class="tc tc-A" onclick="selType('A')"><div class="tc-icon">🦵</div><div class="tc-name">Treino A</div><div class="tc-desc">Pernas</div></div>
         <div class="tc tc-B" onclick="selType('B')"><div class="tc-icon">💪</div><div class="tc-name">Treino B</div><div class="tc-desc">Peito / Ombro / Tríceps</div></div>
         <div class="tc tc-C" onclick="selType('C')"><div class="tc-icon">🏋️</div><div class="tc-name">Treino C</div><div class="tc-desc">Costas / Bíceps</div></div>
         <div class="tc tc-run" onclick="selType('run')"><div class="tc-icon">🏃</div><div class="tc-name">Corrida</div><div class="tc-desc">Progressão 10 km</div></div>
-        <div class="tc tc-football" onclick="selType('football')"><div class="tc-icon">⚽</div><div class="tc-name">Futebol</div><div class="tc-desc">Atividade complementar</div></div>
-        <div class="tc tc-rest" onclick="selType('rest')"><div class="tc-icon">😴</div><div class="tc-name">Descanso</div><div class="tc-desc">Recuperação</div></div>
+        <div class="tc tc-futevolei" onclick="selType('futevolei')"><div class="tc-icon">🏐</div><div class="tc-name">Futevôlei</div><div class="tc-desc">Atividade complementar</div></div>
+        <div class="tc tc-cardio" onclick="selType('cardio')"><div class="tc-icon">🚴</div><div class="tc-name">Cardio</div><div class="tc-desc">Sem corrida</div></div>
+        <div class="tc tc-rest" onclick="selType('rest')" style="grid-column:1/-1"><div class="tc-icon">😴</div><div class="tc-name">Descanso</div><div class="tc-desc">Recuperação</div></div>
       </div>
     </div>
     <div id="log-det" style="display:none">
@@ -202,17 +208,20 @@
 
   <!-- HISTORY -->
   <div id="s-history" class="screen">
-    <div class="ph">
-      <div><div class="pt">Histórico</div><div class="ps" id="hist-count"></div></div>
-    </div>
+    <div class="ph"><div><div class="pt">Histórico</div><div class="ps" id="hist-count"></div></div></div>
     <div id="hist-list"></div>
   </div>
 
   <!-- PROGRESS -->
   <div id="s-progress" class="screen">
-    <div class="ph">
-      <div><div class="pt">Progresso</div><div class="ps">Meta: 10 km até Dez/2026</div></div>
+    <div class="ph"><div><div class="pt">Progresso</div><div class="ps">Meta: 10 km até Dez/2026</div></div></div>
+
+    <div class="cal-card">
+      <div class="label" style="opacity:.75;font-size:11px;font-weight:700;letter-spacing:.6px">CALORIAS TOTAIS QUEIMADAS</div>
+      <div class="cal-num" id="total-kcal">0</div>
+      <div class="cal-sub" id="total-kcal-sub">kcal estimadas</div>
     </div>
+
     <div class="goal-card">
       <div class="label" style="opacity:.75;font-size:11px;font-weight:700;letter-spacing:.6px">MELHOR CORRIDA</div>
       <div class="goal-km" id="best-run">0 km</div>
@@ -220,8 +229,9 @@
       <div class="gpb"><div class="gpf" id="gpf" style="width:0%"></div></div>
       <div class="gpp"><span>0 km</span><span id="gpct">0%</span><span>10 km</span></div>
     </div>
+
     <div class="card">
-      <div class="ct">Plano Mensal</div>
+      <div class="ct">Plano Mensal — Corrida</div>
       <div class="mp" id="month-plan"></div>
     </div>
     <div class="card">
@@ -231,6 +241,13 @@
     <div class="card">
       <div class="ct">Totais</div>
       <div id="total-stats"></div>
+    </div>
+    <div class="card">
+      <div class="ct">Configurações</div>
+      <div class="fg" style="margin-bottom:0">
+        <label class="fl">Seu peso (kg) — usado no cálculo de calorias</label>
+        <input class="fi" type="number" id="weight-input" placeholder="Ex: 80" inputmode="decimal" min="30" max="200" onchange="saveWeight()">
+      </div>
     </div>
   </div>
 
@@ -251,7 +268,7 @@
   </nav>
 </div>
 
-<!-- DELETE CONFIRM MODAL -->
+<!-- DELETE CONFIRM -->
 <div class="moverlay" id="del-modal">
   <div class="modal">
     <div class="mhandle"></div>
@@ -265,61 +282,89 @@
 </div>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────
+// ─── DATA ────────────────────────────────────────────────────
 const WK = {
   A:{name:"Treino A",desc:"Pernas",color:"#EF4444",icon:"🦵",
     ex:[
-      {n:"Agachamento Livre / Leg Press",s:4,r:"10–12"},
-      {n:"Leg Press 45°",s:3,r:"12"},
-      {n:"Cadeira Extensora",s:3,r:"15"},
-      {n:"Cadeira Flexora",s:3,r:"15"},
-      {n:"Stiff com Halteres",s:3,r:"12"},
-      {n:"Panturrilha em Pé",s:4,r:"15–20"},
-      {n:"Prancha Abdominal",s:3,r:"30–45s"},
+      {n:"Agachamento Livre / Leg Press",s:4,r:"10–12",sec:"Pernas"},
+      {n:"Leg Press 45°",s:3,r:"12",sec:"Pernas"},
+      {n:"Cadeira Extensora",s:3,r:"15",sec:"Pernas"},
+      {n:"Cadeira Flexora",s:3,r:"15",sec:"Pernas"},
+      {n:"Stiff com Halteres",s:3,r:"12",sec:"Pernas"},
+      {n:"Panturrilha em Pé",s:4,r:"15–20",sec:"Pernas"},
+      {n:"Crunch Abdominal",s:3,r:"20",sec:"Abdômen"},
+      {n:"Elevação de Pernas",s:3,r:"15",sec:"Abdômen"},
+      {n:"Prancha",s:3,r:"40s",sec:"Abdômen"},
     ]},
   B:{name:"Treino B",desc:"Peito / Ombro / Tríceps",color:"#10B981",icon:"💪",
     ex:[
-      {n:"Supino Reto com Barra",s:4,r:"10–12"},
-      {n:"Supino Inclinado com Halteres",s:3,r:"12"},
-      {n:"Crucifixo / Peck Deck",s:3,r:"12–15"},
-      {n:"Desenvolvimento com Halteres",s:3,r:"12"},
-      {n:"Elevação Lateral",s:3,r:"15"},
-      {n:"Tríceps na Corda (pulley)",s:3,r:"15"},
-      {n:"Tríceps Testa",s:3,r:"12"},
+      {n:"Supino Reto com Barra",s:4,r:"10–12",sec:"Peito"},
+      {n:"Supino Inclinado com Halteres",s:3,r:"12",sec:"Peito"},
+      {n:"Crucifixo / Peck Deck",s:3,r:"12–15",sec:"Peito"},
+      {n:"Desenvolvimento com Halteres",s:3,r:"12",sec:"Ombro"},
+      {n:"Elevação Lateral",s:3,r:"15",sec:"Ombro"},
+      {n:"Tríceps na Corda (pulley)",s:3,r:"15",sec:"Tríceps"},
+      {n:"Tríceps Testa",s:3,r:"12",sec:"Tríceps"},
+      {n:"Crunch Abdominal",s:3,r:"20",sec:"Abdômen"},
+      {n:"Prancha Lateral",s:3,r:"30s cada",sec:"Abdômen"},
     ]},
-  C:{name:"Treino C",desc:"Costas / Ombro Post. / Bíceps",color:"#8B5CF6",icon:"🏋️",
+  C:{name:"Treino C",desc:"Costas / Bíceps",color:"#8B5CF6",icon:"🏋️",
     ex:[
-      {n:"Puxada Frontal",s:4,r:"10–12"},
-      {n:"Remada Curvada com Barra",s:3,r:"12"},
-      {n:"Remada Unilateral com Haltere",s:3,r:"12"},
-      {n:"Pullover",s:3,r:"12"},
-      {n:"Face Pull",s:3,r:"15"},
-      {n:"Rosca Direta com Barra",s:3,r:"12"},
-      {n:"Rosca Martelo",s:3,r:"12"},
+      {n:"Puxada Frontal",s:4,r:"10–12",sec:"Costas"},
+      {n:"Remada Curvada com Barra",s:3,r:"12",sec:"Costas"},
+      {n:"Remada Unilateral com Haltere",s:3,r:"12",sec:"Costas"},
+      {n:"Pullover",s:3,r:"12",sec:"Costas"},
+      {n:"Face Pull",s:3,r:"15",sec:"Ombro Post."},
+      {n:"Rosca Direta com Barra",s:3,r:"12",sec:"Bíceps"},
+      {n:"Rosca Martelo",s:3,r:"12",sec:"Bíceps"},
+      {n:"Abdominal Infra",s:3,r:"15",sec:"Abdômen"},
+      {n:"Russian Twist",s:3,r:"20",sec:"Abdômen"},
     ]},
 };
+
+const CARDIO_TYPES = ["Bicicleta ergométrica","Elíptico","Esteira (caminhada)","Pular corda","HIIT","Outro"];
 
 const RPLAN=[
   {m:"Jun",t:3,n:6},{m:"Jul",t:4,n:7},{m:"Ago",t:5,n:8},
   {m:"Set",t:6.5,n:9},{m:"Out",t:8,n:10},{m:"Nov",t:9.5,n:11},{m:"Dez",t:10,n:12},
 ];
 
-// Mon=A, Tue=run, Wed=B, Thu=football, Fri=C, Sat=football, Sun=rest
-const WPLAN={1:{t:'gym',w:'A'},2:{t:'run'},3:{t:'gym',w:'B'},4:{t:'football'},5:{t:'gym',w:'C'},6:{t:'football'},0:{t:'rest'}};
+// Mon=A, Tue=run, Wed=B, Thu=futevolei, Fri=C, Sat=futevolei, Sun=rest
+const WPLAN={1:{t:'gym',w:'A'},2:{t:'run'},3:{t:'gym',w:'B'},4:{t:'futevolei'},5:{t:'gym',w:'C'},6:{t:'futevolei'},0:{t:'rest'}};
 
-// ─── STATE ──────────────────────────────────────────────────
-let curScreen='home', selT=null, checked={}, pendDate='';
+// MET values for calorie estimation
+const METS={A:5.0,B:4.0,C:4.0,run:8.5,futevolei:5.0,cardio:7.0};
+
+// ─── STATE ───────────────────────────────────────────────────
+let selT=null, checked={}, pendDate='';
 
 function getActs(){try{return JSON.parse(localStorage.getItem('_tacts')||'[]')}catch{return[]}}
 function setActs(a){localStorage.setItem('_tacts',JSON.stringify(a))}
+function getWeight(){return parseFloat(localStorage.getItem('_weight')||'80')}
+function saveWeight(){
+  const v=parseFloat(document.getElementById('weight-input').value);
+  if(v>=30&&v<=200){localStorage.setItem('_weight',v);toast(`Peso salvo: ${v} kg`);}
+}
 
-// ─── NAVIGATE ───────────────────────────────────────────────
+// ─── CALORIES ────────────────────────────────────────────────
+function calcCals(entry){
+  const w=getWeight();
+  if(entry.type==='gym'){
+    const dur=entry.duration||55;
+    return Math.round(METS[entry.workout]*w*dur/60);
+  }
+  if(entry.type==='run')return Math.round(w*(entry.distance||0)*1.04);
+  if(entry.type==='futevolei')return Math.round(METS.futevolei*w*(entry.duration||60)/60);
+  if(entry.type==='cardio')return Math.round(METS.cardio*w*(entry.duration||30)/60);
+  return 0;
+}
+
+// ─── NAVIGATE ────────────────────────────────────────────────
 function navigate(s){
   document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
   document.getElementById('s-'+s).classList.add('active');
   document.getElementById('nb-'+s).classList.add('active');
-  curScreen=s;
   if(s==='home')renderHome();
   if(s==='history')renderHistory();
   if(s==='progress')renderProgress();
@@ -330,17 +375,13 @@ function navigate(s){
 function renderHome(){
   const now=new Date(), dow=now.getDay();
   document.getElementById('home-date').textContent=cap(now.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}));
-
   const p=WPLAN[dow];
   const wn=document.getElementById('h-wname'), wd=document.getElementById('h-wdesc');
   if(p.t==='gym'){const w=WK[p.w];wn.textContent=w.name;wd.textContent=w.desc;}
   else if(p.t==='run'){wn.textContent="Corrida Leve";const m=RPLAN.find(x=>x.n===now.getMonth()+1);wd.textContent=m?`Meta do mês: ${m.t} km`:'Corra no seu ritmo';}
-  else if(p.t==='football'){wn.textContent="Futebol";wd.textContent="Atividade complementar";}
+  else if(p.t==='futevolei'){wn.textContent="Futevôlei";wd.textContent="Atividade complementar";}
   else{wn.textContent="Descanso";wd.textContent="Recuperação — você merece";}
-
-  renderWeek();
-  renderStreak();
-  renderLastAct();
+  renderWeek();renderStreak();renderLastAct();
 }
 
 function renderWeek(){
@@ -350,13 +391,13 @@ function renderWeek(){
   let h='';
   for(let i=0;i<7;i++){
     const d=new Date(mon);d.setDate(mon.getDate()+i);
-    const ds=fmt(d), isT=ds===today, act=acts.find(a=>a.date===ds);
-    let cls='wdd'+(isT?' today':'');
-    let lbl=d.getDate();
+    const ds=fmt(d),isT=ds===today,act=acts.find(a=>a.date===ds);
+    let cls='wdd'+(isT?' today':''),lbl=d.getDate();
     if(act){
       if(act.type==='gym'){cls+=' d'+act.workout;lbl=act.workout;}
       else if(act.type==='run'){cls+=' drun';lbl='🏃';}
-      else if(act.type==='football'){cls+=' dfootball';lbl='⚽';}
+      else if(act.type==='futevolei'){cls+=' dfutevolei';lbl='🏐';}
+      else if(act.type==='cardio'){cls+=' dcardio';lbl='🚴';}
       else{cls+=' drest';lbl='😴';}
     }
     h+=`<div class="wd"><div class="wdl">${days[i]}</div><div class="${cls}">${lbl}</div></div>`;
@@ -382,8 +423,8 @@ function renderLastAct(){
   const acts=getActs().sort((a,b)=>b.date.localeCompare(a.date));
   const el=document.getElementById('last-act');
   if(!acts.length){el.innerHTML='<div style="color:var(--muted);font-size:14px">Nenhuma atividade ainda. Bora começar!</div>';return;}
-  const a=acts[0], info=actInfo(a);
-  el.innerHTML=`<div class="hi" style="padding:0"><div class="hicon" style="background:${info.color}">${info.ic}</div><div class="hinfo"><div class="hname">${info.nm}</div><div class="hdate">${fmtD(a.date)}${a.distance?` · ${a.distance} km`:''}</div></div></div>`;
+  const a=acts[0],info=actInfo(a),kcal=calcCals(a);
+  el.innerHTML=`<div class="hi" style="padding:0"><div class="hicon" style="background:${info.color}">${info.ic}</div><div class="hinfo"><div class="hname">${info.nm}</div><div class="hdate">${fmtD(a.date)}${a.distance?` · ${a.distance} km`:''}${kcal?` <span class="kcal-badge">~${kcal} kcal</span>`:''}</div></div></div>`;
 }
 
 // ─── LOG ─────────────────────────────────────────────────────
@@ -409,33 +450,50 @@ function showDet(t){
   if(['A','B','C'].includes(t)){
     const w=WK[t];
     w.ex.forEach((_,i)=>checked[i]=false);
+    let lastSec='',exHtml='';
+    w.ex.forEach((e,i)=>{
+      if(e.sec!==lastSec){exHtml+=`<div class="ex-section">${e.sec}</div>`;lastSec=e.sec;}
+      exHtml+=`<div class="ei" id="ei${i}" onclick="togEx(${i})"><div class="eck" id="ec${i}"></div><div><div class="en">${e.n}</div><div class="em">${e.s} séries × ${e.r}</div></div></div>`;
+    });
     card.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <span style="font-size:28px">${w.icon}</span>
         <div><div style="font-size:18px;font-weight:800">${w.name}</div><div style="font-size:13px;color:var(--muted)">${w.desc}</div></div>
       </div>
-      <div class="fg"><label class="fl">Data</label><input class="fi" type="date" id="ld" value="${pendDate}"></div>
-      <div class="ct">Exercícios — marque os que fez</div>
-      <div class="el" id="exl">${w.ex.map((e,i)=>`
-        <div class="ei" id="ei${i}" onclick="togEx(${i})">
-          <div class="eck" id="ec${i}"></div>
-          <div><div class="en">${e.n}</div><div class="em">${e.s} séries × ${e.r}</div></div>
-        </div>`).join('')}
+      <div class="fi-row">
+        <div class="fg"><label class="fl">Data</label><input class="fi" type="date" id="ld" value="${pendDate}"></div>
+        <div class="fg"><label class="fl">Duração (min)</label><input class="fi" type="number" id="dur" placeholder="55" inputmode="numeric" min="10" max="180"></div>
       </div>
+      <div class="ct" style="margin-top:4px">Exercícios — marque os que fez</div>
+      <div class="el" id="exl">${exHtml}</div>
       <div class="fg" style="margin-top:14px"><label class="fl">Notas (cargas, observações)</label><input class="fi" type="text" id="gn" placeholder="Ex: Agachamento 60kg" maxlength="120"></div>`;
   } else if(t==='run'){
     card.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:28px">🏃</span><div><div style="font-size:18px;font-weight:800">Corrida</div><div style="font-size:13px;color:var(--muted)">Progressão 10 km</div></div></div>
       <div class="fg"><label class="fl">Data</label><input class="fi" type="date" id="ld" value="${pendDate}"></div>
-      <div class="fg"><label class="fl">Distância (km)</label><input class="fi" type="number" id="rdist" placeholder="Ex: 3.5" step="0.1" min="0" max="50" inputmode="decimal"></div>
-      <div class="fg"><label class="fl">Tempo (opcional)</label><input class="fi" type="text" id="rtime" placeholder="Ex: 25min" maxlength="20"></div>
+      <div class="fi-row">
+        <div class="fg"><label class="fl">Distância (km)</label><input class="fi" type="number" id="rdist" placeholder="3.5" step="0.1" min="0" max="50" inputmode="decimal"></div>
+        <div class="fg"><label class="fl">Tempo</label><input class="fi" type="text" id="rtime" placeholder="25min" maxlength="20"></div>
+      </div>
       <div class="fg"><label class="fl">Notas (opcional)</label><input class="fi" type="text" id="rnotes" placeholder="Como foi?" maxlength="100"></div>`;
-  } else if(t==='football'){
+  } else if(t==='futevolei'){
     card.innerHTML=`
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:28px">⚽</span><div><div style="font-size:18px;font-weight:800">Futebol</div><div style="font-size:13px;color:var(--muted)">Atividade complementar</div></div></div>
-      <div class="fg"><label class="fl">Data</label><input class="fi" type="date" id="ld" value="${pendDate}"></div>
-      <div class="fg"><label class="fl">Duração (opcional)</label><input class="fi" type="text" id="fdur" placeholder="Ex: 1h30min" maxlength="20"></div>
-      <div class="fg"><label class="fl">Notas (opcional)</label><input class="fi" type="text" id="fnotes" placeholder="Como foi o racha?" maxlength="100"></div>`;
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:28px">🏐</span><div><div style="font-size:18px;font-weight:800">Futevôlei</div><div style="font-size:13px;color:var(--muted)">Atividade complementar</div></div></div>
+      <div class="fi-row">
+        <div class="fg"><label class="fl">Data</label><input class="fi" type="date" id="ld" value="${pendDate}"></div>
+        <div class="fg"><label class="fl">Duração (min)</label><input class="fi" type="number" id="dur" placeholder="60" inputmode="numeric" min="10" max="300"></div>
+      </div>
+      <div class="fg"><label class="fl">Notas (opcional)</label><input class="fi" type="text" id="fnotes" placeholder="Como foi?" maxlength="100"></div>`;
+  } else if(t==='cardio'){
+    const opts=CARDIO_TYPES.map(c=>`<option value="${c}">${c}</option>`).join('');
+    card.innerHTML=`
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:28px">🚴</span><div><div style="font-size:18px;font-weight:800">Cardio</div><div style="font-size:13px;color:var(--muted)">Sem corrida</div></div></div>
+      <div class="fg"><label class="fl">Tipo</label><select class="fi" id="ctype"><option value="">Selecione...</option>${opts}</select></div>
+      <div class="fi-row">
+        <div class="fg"><label class="fl">Data</label><input class="fi" type="date" id="ld" value="${pendDate}"></div>
+        <div class="fg"><label class="fl">Duração (min)</label><input class="fi" type="number" id="dur" placeholder="30" inputmode="numeric" min="5" max="180"></div>
+      </div>
+      <div class="fg"><label class="fl">Notas (opcional)</label><input class="fi" type="text" id="cnotes" placeholder="Intensidade, observações..." maxlength="100"></div>`;
   } else {
     card.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:28px">😴</span><div><div style="font-size:18px;font-weight:800">Descanso</div><div style="font-size:13px;color:var(--muted)">Recuperação é parte do treino</div></div></div>
@@ -445,9 +503,8 @@ function showDet(t){
 
 function togEx(i){
   checked[i]=!checked[i];
-  const it=document.getElementById('ei'+i), ck=document.getElementById('ec'+i);
-  ck.classList.toggle('chk',checked[i]);
-  it.classList.toggle('done',checked[i]);
+  document.getElementById('ec'+i).classList.toggle('chk',checked[i]);
+  document.getElementById('ei'+i).classList.toggle('done',checked[i]);
 }
 
 function saveAct(){
@@ -455,11 +512,14 @@ function saveAct(){
   const dateEl=document.getElementById('ld');
   const date=dateEl?dateEl.value:fmt(new Date());
   if(!date){toast('Selecione a data');return;}
+  const durEl=document.getElementById('dur');
+  const dur=durEl?parseInt(durEl.value)||null:null;
 
   const entry={id:Date.now(),date,type:['A','B','C'].includes(selT)?'gym':selT};
 
   if(['A','B','C'].includes(selT)){
     entry.workout=selT;
+    if(dur)entry.duration=dur;
     entry.exercises=Object.entries(checked).filter(([,v])=>v).map(([k])=>WK[selT].ex[+k].n);
     const gn=document.getElementById('gn');if(gn&&gn.value)entry.notes=gn.value;
   } else if(selT==='run'){
@@ -467,18 +527,25 @@ function saveAct(){
     entry.distance=d?Math.round(parseFloat(d.value)*10)/10||0:0;
     const rt=document.getElementById('rtime');if(rt&&rt.value)entry.time=rt.value;
     const rn=document.getElementById('rnotes');if(rn&&rn.value)entry.notes=rn.value;
-  } else if(selT==='football'){
-    const fd=document.getElementById('fdur');if(fd&&fd.value)entry.duration=fd.value;
+  } else if(selT==='futevolei'){
+    if(dur)entry.duration=dur;
     const fn=document.getElementById('fnotes');if(fn&&fn.value)entry.notes=fn.value;
+  } else if(selT==='cardio'){
+    const ct=document.getElementById('ctype');if(ct&&ct.value)entry.cardioType=ct.value;
+    if(dur)entry.duration=dur;
+    const cn=document.getElementById('cnotes');if(cn&&cn.value)entry.notes=cn.value;
   }
+
+  const kcal=calcCals(entry);
+  if(kcal)entry.kcal=kcal;
 
   const acts=getActs();
   const idx=acts.findIndex(a=>a.date===date&&a.type===entry.type&&(entry.type!=='gym'||a.workout===entry.workout));
   if(idx>=0)acts[idx]=entry;else acts.push(entry);
   setActs(acts);
-  toast('✓ Salvo!');
-  resetLog();
-  navigate('home');
+
+  const msg=kcal?`✓ Salvo! ~${kcal} kcal`:'✓ Salvo!';
+  toast(msg);resetLog();navigate('home');
 }
 
 function cancelLog(){resetLog();}
@@ -488,19 +555,19 @@ function renderHistory(){
   const acts=getActs().sort((a,b)=>b.date.localeCompare(a.date));
   document.getElementById('hist-count').textContent=`${acts.length} atividade${acts.length!==1?'s':''} registrada${acts.length!==1?'s':''}`;
   const el=document.getElementById('hist-list');
-  if(!acts.length){el.innerHTML='<div class="empty"><div class="ei2">📝</div><p style="font-size:15px">Nenhuma atividade ainda.<br>Registre seu primeiro treino!</p></div>';return;}
+  if(!acts.length){el.innerHTML='<div class="empty"><div class="ei2">📝</div><p style="font-size:15px">Nenhuma atividade ainda.</p></div>';return;}
 
   const grp={};
   acts.forEach(a=>{const k=a.date.slice(0,7);(grp[k]=grp[k]||[]).push(a);});
-
   let h='';
   Object.entries(grp).sort((a,b)=>b[0].localeCompare(a[0])).forEach(([mo,items])=>{
-    const [y,m]=mo.split('-');
+    const[y,m]=mo.split('-');
     const mn=new Date(+y,+m-1,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
     h+=`<div class="ct" style="padding:6px 4px;text-transform:capitalize">${mn}</div><div class="card" style="padding:8px 16px">`;
     items.forEach(a=>{
-      const info=actInfo(a);
-      h+=`<div class="hi"><div class="hicon" style="background:${info.color}">${info.ic}</div><div class="hinfo"><div class="hname">${info.nm}</div><div class="hdate">${fmtD(a.date)}${a.distance?` · ${a.distance} km`:''}${a.notes?` · ${a.notes}`:''}</div></div><button class="hdel" onclick="confirmDel(${a.id})">×</button></div>`;
+      const info=actInfo(a),kcal=a.kcal||calcCals(a);
+      const extra=[a.distance?`${a.distance} km`:'',a.duration?`${a.duration}min`:'',a.cardioType||'',a.notes||''].filter(Boolean).join(' · ');
+      h+=`<div class="hi"><div class="hicon" style="background:${info.color}">${info.ic}</div><div class="hinfo"><div class="hname">${info.nm}</div><div class="hdate">${fmtD(a.date)}${extra?' · '+extra:''}${kcal?` <span class="kcal-badge">~${kcal} kcal</span>`:''}</div></div><button class="hdel" onclick="confirmDel(${a.id})">×</button></div>`;
     });
     h+='</div>';
   });
@@ -512,11 +579,8 @@ function confirmDel(id){
   pendDelId=id;
   document.getElementById('del-modal').classList.add('open');
   document.getElementById('del-confirm-btn').onclick=()=>{
-    const acts=getActs().filter(a=>a.id!==pendDelId);
-    setActs(acts);
-    closeDelModal();
-    renderHistory();
-    toast('Removido');
+    setActs(getActs().filter(a=>a.id!==pendDelId));
+    closeDelModal();renderHistory();toast('Removido');
   };
 }
 function closeDelModal(){document.getElementById('del-modal').classList.remove('open');pendDelId=null;}
@@ -533,18 +597,23 @@ function renderProgress(){
   document.getElementById('gpf').style.width=pct+'%';
   document.getElementById('gpct').textContent=Math.round(pct)+'%';
 
-  const now=new Date(), curM=now.getMonth()+1, curY=now.getFullYear();
+  // Total calories
+  const totalKcal=acts.reduce((s,a)=>{const k=a.kcal||calcCals(a);return s+k;},0);
+  document.getElementById('total-kcal').textContent=totalKcal.toLocaleString('pt-BR');
+  document.getElementById('total-kcal-sub').textContent=`kcal · baseado em ${getWeight()} kg`;
+
+  // Month plan
+  const now=new Date(),curM=now.getMonth()+1,curY=now.getFullYear();
   const runsByM={};
   runs.forEach(r=>{const m=+r.date.slice(5,7);if(!runsByM[m]||r.distance>runsByM[m])runsByM[m]=r.distance;});
-
   document.getElementById('month-plan').innerHTML=RPLAN.map(mp=>{
-    const isCur=mp.n===curM&&curY===2026, isAch=(runsByM[mp.n]||0)>=mp.t;
-    const bfm=runsByM[mp.n]||0;
-    let cls='mi'+(isCur?' cur':'')+(isAch?' ach':'');
+    const isCur=mp.n===curM&&curY===2026,isAch=(runsByM[mp.n]||0)>=mp.t,bfm=runsByM[mp.n]||0;
+    const cls='mi'+(isCur?' cur':'')+(isAch?' ach':'');
     const kmColor=isAch?'#10B981':isCur?'#F59E0B':'var(--text)';
     return `<div class="${cls}"><div class="mname">${mp.m}</div><div class="mkm" style="color:${kmColor}">${mp.t} km</div>${bfm>0?`<div class="mfeit">${bfm.toFixed(1)} km feito</div>`:''}</div>`;
   }).join('');
 
+  // Gym stats
   const gym=acts.filter(a=>a.type==='gym');
   const cA=gym.filter(a=>a.workout==='A').length,cB=gym.filter(a=>a.workout==='B').length,cC=gym.filter(a=>a.workout==='C').length;
   document.getElementById('gym-stats').innerHTML=`
@@ -552,20 +621,25 @@ function renderProgress(){
     <div class="stat"><span class="sl"><span style="display:inline-block;background:#D1FAE5;color:var(--b);padding:2px 8px;border-radius:6px;font-weight:700;font-size:12px;margin-right:6px">B</span>Peito/Ombro/Tri</span><span class="sv">${cB}×</span></div>
     <div class="stat"><span class="sl"><span style="display:inline-block;background:#EDE9FE;color:var(--c);padding:2px 8px;border-radius:6px;font-weight:700;font-size:12px;margin-right:6px">C</span>Costas/Bíceps</span><span class="sv">${cC}×</span></div>`;
 
+  // Totals
   const totKm=runs.reduce((s,r)=>s+r.distance,0);
   document.getElementById('total-stats').innerHTML=`
     <div class="stat"><span class="sl">🏋️ Academia</span><span class="sv">${gym.length}×</span></div>
-    <div class="stat"><span class="sl">🏃 Corridas</span><span class="sv">${runs.length}×</span></div>
-    <div class="stat"><span class="sl">📏 KM percorridos</span><span class="sv">${totKm.toFixed(1)} km</span></div>
-    <div class="stat"><span class="sl">⚽ Futebol</span><span class="sv">${acts.filter(a=>a.type==='football').length}×</span></div>
+    <div class="stat"><span class="sl">🏃 Corridas</span><span class="sv">${runs.length}× · ${totKm.toFixed(1)} km</span></div>
+    <div class="stat"><span class="sl">🏐 Futevôlei</span><span class="sv">${acts.filter(a=>a.type==='futevolei').length}×</span></div>
+    <div class="stat"><span class="sl">🚴 Cardio</span><span class="sv">${acts.filter(a=>a.type==='cardio').length}×</span></div>
     <div class="stat"><span class="sl">📅 Total atividades</span><span class="sv">${acts.length}</span></div>`;
+
+  // Weight input
+  document.getElementById('weight-input').value=getWeight();
 }
 
 // ─── HELPERS ─────────────────────────────────────────────────
 function actInfo(a){
   if(a.type==='gym'){const w=WK[a.workout];return{nm:`${w.name} — ${w.desc.split(' / ')[0]}`,color:w.color,ic:a.workout};}
   if(a.type==='run')return{nm:`Corrida${a.distance?' · '+a.distance+' km':''}`,color:'#F59E0B',ic:'🏃'};
-  if(a.type==='football')return{nm:'Futebol',color:'#3B82F6',ic:'⚽'};
+  if(a.type==='futevolei')return{nm:'Futevôlei',color:'#3B82F6',ic:'🏐'};
+  if(a.type==='cardio')return{nm:`Cardio${a.cardioType?' · '+a.cardioType:''}`,color:'#EC4899',ic:'🚴'};
   if(a.type==='rest')return{nm:'Descanso',color:'#94A3B8',ic:'😴'};
   return{nm:a.type,color:'#64748B',ic:'?'};
 }
@@ -574,14 +648,9 @@ function fmtD(s){const[y,m,d]=s.split('-');return new Date(+y,+m-1,+d).toLocaleD
 function addD(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
 function parseD(s){const[y,m,d]=s.split('-');return new Date(+y,+m-1,+d)}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
-function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2300)}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500)}
 
-// Service Worker
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-
-// Init
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 renderHome();
 </script>
 </body>
