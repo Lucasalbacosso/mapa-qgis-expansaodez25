@@ -161,8 +161,14 @@
     /* DEMO BUTTON */
     .dbtn{flex-shrink:0;background:none;border:1.5px solid var(--border);color:var(--primary);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;margin-left:8px;transition:all .18s}
     .dbtn:active{background:var(--primary);color:#fff;border-color:var(--primary)}
-    .demo-svg-wrap{text-align:center;margin:0 auto 16px;border-radius:16px;overflow:hidden;max-width:220px}
     .demo-tip{font-size:14px;color:var(--muted);line-height:1.6;background:var(--bg);border-radius:12px;padding:12px 14px}
+    /* DEMO IMAGES cross-fade */
+    @keyframes if1{0%,35%{opacity:1}55%,90%{opacity:0}100%{opacity:1}}
+    @keyframes if2{0%,35%{opacity:0}55%,90%{opacity:1}100%{opacity:0}}
+    .img-f1{animation:if1 2.4s ease-in-out infinite}
+    .img-f2{animation:if2 2.4s ease-in-out infinite;position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+    .demo-img-wrap{position:relative;background:#E2E8F0;border-radius:14px;overflow:hidden;max-width:300px;margin:0 auto 16px}
+    .demo-img-wrap img.img-f1{width:100%;display:block}
   </style>
 </head>
 <body>
@@ -474,13 +480,55 @@ function getDemoSVG(name){
   }
 }
 
+const IMG_BASE='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
+const EXERCISE_IMGS={
+  'Agachamento Livre / Leg Press':'Barbell_Full_Squat',
+  'Leg Press 45°':'Leg_Press',
+  'Cadeira Extensora':'Leg_Extensions',
+  'Cadeira Flexora':'Lying_Leg_Curls',
+  'Stiff com Halteres':'Romanian_Deadlift',
+  'Panturrilha em Pé':'Standing_Barbell_Calf_Raise',
+  'Crunch Abdominal':'Crunches',
+  'Elevação de Pernas':'Hanging_Leg_Raise',
+  'Prancha':'Plank',
+  'Prancha Lateral':'Plank',
+  'Supino Reto com Barra':'Barbell_Bench_Press_-_Medium_Grip',
+  'Supino Inclinado com Halteres':'Incline_Dumbbell_Press',
+  'Crucifixo / Peck Deck':'Dumbbell_Flyes',
+  'Desenvolvimento com Halteres':'Dumbbell_Shoulder_Press',
+  'Elevação Lateral':'Side_Lateral_Raise',
+  'Tríceps na Corda (pulley)':'Triceps_Pushdown',
+  'Tríceps Testa':'Cable_Lying_Triceps_Extension',
+  'Puxada Frontal':'Full_Range-Of-Motion_Lat_Pulldown',
+  'Remada Curvada com Barra':'Bent_Over_Barbell_Row',
+  'Remada Unilateral com Haltere':'One-Arm_Dumbbell_Row',
+  'Pullover':'Bent-Arm_Barbell_Pullover',
+  'Face Pull':'Face_Pull',
+  'Rosca Direta com Barra':'Barbell_Curl',
+  'Rosca Martelo':'Hammer_Curls',
+  'Abdominal Infra':'Hanging_Leg_Raise',
+  'Russian Twist':'Cable_Russian_Twists',
+};
+
 function showDemo(workoutType, exIndex){
   const ex=WK[workoutType].ex[exIndex];
   const type=EXERCISE_MAP[ex.n]||'squat';
   const tip=DEMO_TIPS[type]||'';
+  const imgKey=EXERCISE_IMGS[ex.n];
+  let mediaHTML;
+  if(imgKey){
+    const u0=IMG_BASE+imgKey+'/0.jpg', u1=IMG_BASE+imgKey+'/1.jpg';
+    mediaHTML=`<div class="demo-img-wrap" id="demo-img-wrap">
+      <img class="img-f1" src="${u0}" alt="${ex.n}" onerror="document.getElementById('demo-img-wrap').outerHTML='<div style=\'margin:0 auto 16px\'>'+getDemoSVG(currentDemoEx)+'</div>'">
+      <img class="img-f2" src="${u1}" alt="${ex.n}">
+    </div>`;
+  } else {
+    mediaHTML=`<div style="margin:0 auto 16px">${getDemoSVG(ex.n)}</div>`;
+  }
+  window.currentDemoEx=ex.n;
   document.getElementById('demo-content').innerHTML=`
     <div class="mtitle" style="font-size:17px;margin-bottom:14px">${ex.n}</div>
-    <div class="demo-svg-wrap">${getDemoSVG(ex.n)}</div>
+    ${mediaHTML}
     ${tip?`<div class="demo-tip">${tip}</div>`:''}`;
   document.getElementById('demo-modal').classList.add('open');
 }
