@@ -158,6 +158,11 @@
     .mtitle{font-size:20px;font-weight:800;margin-bottom:20px}
     .confirm-row{display:flex;gap:10px}
     .confirm-row .btn{margin-bottom:0}
+    /* DEMO BUTTON */
+    .dbtn{flex-shrink:0;background:none;border:1.5px solid var(--border);color:var(--primary);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;margin-left:8px;transition:all .18s}
+    .dbtn:active{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .demo-svg-wrap{text-align:center;margin:0 auto 16px;border-radius:16px;overflow:hidden;max-width:220px}
+    .demo-tip{font-size:14px;color:var(--muted);line-height:1.6;background:var(--bg);border-radius:12px;padding:12px 14px}
   </style>
 </head>
 <body>
@@ -281,6 +286,14 @@
   </div>
 </div>
 
+<div class="moverlay" id="demo-modal">
+  <div class="modal">
+    <div class="mhandle"></div>
+    <div id="demo-content"></div>
+    <button class="btn btn-outline" style="margin-top:16px;margin-bottom:0" onclick="closeDemoModal()">Fechar</button>
+  </div>
+</div>
+
 <script>
 // ─── DATA ────────────────────────────────────────────────────
 const WK = {
@@ -334,6 +347,145 @@ const WPLAN={1:{t:'gym',w:'A'},2:{t:'run'},3:{t:'gym',w:'B'},4:{t:'futevolei'},5
 
 // MET values for calorie estimation
 const METS={A:5.0,B:4.0,C:4.0,run:8.5,futevolei:5.0,cardio:7.0};
+
+// ─── EXERCISE DEMOS ──────────────────────────────────────────
+const EXERCISE_MAP={
+  'Agachamento Livre / Leg Press':'squat','Leg Press 45°':'squat',
+  'Cadeira Extensora':'leg_ext','Cadeira Flexora':'leg_curl',
+  'Stiff com Halteres':'hinge','Panturrilha em Pé':'calf',
+  'Crunch Abdominal':'crunch','Elevação de Pernas':'leg_raise',
+  'Prancha':'plank','Prancha Lateral':'plank',
+  'Supino Reto com Barra':'bench','Supino Inclinado com Halteres':'bench',
+  'Crucifixo / Peck Deck':'fly','Desenvolvimento com Halteres':'ohp',
+  'Elevação Lateral':'lateral','Tríceps na Corda (pulley)':'tri_push',
+  'Tríceps Testa':'skull_crusher','Puxada Frontal':'pulldown',
+  'Remada Curvada com Barra':'row','Remada Unilateral com Haltere':'row',
+  'Pullover':'pullover','Face Pull':'face_pull',
+  'Rosca Direta com Barra':'curl','Rosca Martelo':'curl',
+  'Abdominal Infra':'leg_raise','Russian Twist':'russian_twist',
+};
+
+const DEMO_TIPS={
+  squat:'Pés na largura dos ombros. Desça controlado, joelhos alinhados com os pés. Costas neutras.',
+  leg_ext:'Sentado, estenda a perna contraindo o quadríceps. Retorne devagar — não solte.',
+  leg_curl:'Deitado de bruços, curve o calcanhar em direção ao glúteo. Controle o retorno.',
+  hinge:'Empurre os quadris para trás mantendo as costas retas. Sinta o alongamento no isquiotibial.',
+  calf:'Suba na ponta dos pés, contraia no topo por 1s. Desça lentamente até o calcanhar tocar o chão.',
+  crunch:'Contraia o abdômen e eleve apenas os ombros. Não puxe o pescoço com as mãos.',
+  leg_raise:'Lombar colada no chão. Suba as pernas até 90°, desça sem encostar.',
+  plank:'Corpo reto como uma tábua, cotovelos sob os ombros. Respire normalmente, não prenda.',
+  bench:'Barra desce controlado até o peito. Empurre explosivamente, cotovelos a ~75°.',
+  fly:'Abra com leve flexão do cotovelo sentindo o peito. Feche no topo espremendo o peitoral.',
+  ohp:'Barra dos ombros até acima da cabeça em linha reta. Core ativado durante todo o movimento.',
+  lateral:'Eleve os braços até a altura dos ombros com cotovelo levemente flexionado. Controle o retorno.',
+  tri_push:'Cotovelos colados ao corpo, fixos. Mova apenas o antebraço para baixo. Esprema no final.',
+  skull_crusher:'Cotovelos apontados ao teto, fixos. Dobre o cotovelo levando a barra à testa. Esprema no topo.',
+  pulldown:'Puxe até o peito abrindo bem a escápula. Retorne controlado até os braços quase estendidos.',
+  row:'Tronco inclinado ~45°. Puxe o cotovelo para trás e para cima, comprimindo a escápula.',
+  pullover:'Braços levemente flexionados. Arco amplo de trás da cabeça até sobre o peito.',
+  face_pull:'Puxe em direção ao rosto com cotovelos altos. Foca no deltoide posterior e manguito.',
+  curl:'Cotovelos fixos ao lado do corpo. Suba o antebraço, esprema o bíceps no topo.',
+  russian_twist:'Tronco levemente reclinado. Gire os ombros de lado a lado. Core sempre ativado.',
+};
+
+function getDemoSVG(name){
+  const type=EXERCISE_MAP[name]||'squat';
+  const S='stroke:#1E293B;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none';
+  const H='fill:#1E293B';const W='fill:#475569';
+  const hd=(x,y,r=9)=>`<circle style="${H}" cx="${x}" cy="${y}" r="${r}"/>`;
+  const wt=(x,y,r=7)=>`<circle style="${W}" cx="${x}" cy="${y}" r="${r}"/>`;
+  const ln=(x1,y1,x2,y2)=>`<line style="${S}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+  const BG={squat:'#FEE2E2',leg_ext:'#FEE2E2',leg_curl:'#FEE2E2',hinge:'#FEE2E2',calf:'#FEE2E2',
+    crunch:'#D1FAE5',leg_raise:'#D1FAE5',plank:'#D1FAE5',bench:'#D1FAE5',fly:'#D1FAE5',
+    ohp:'#D1FAE5',lateral:'#D1FAE5',tri_push:'#EDE9FE',skull_crusher:'#EDE9FE',
+    pulldown:'#EDE9FE',row:'#EDE9FE',pullover:'#EDE9FE',face_pull:'#EDE9FE',curl:'#EDE9FE',
+    russian_twist:'#D1FAE5'};
+  const bg=BG[type]||'#EFF6FF';
+  function mk(f1,f2){
+    return `<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg" style="width:220px;max-width:100%;display:block;margin:0 auto;background:${bg};border-radius:16px"><defs><style>@keyframes p1{0%,32%{opacity:1}52%,82%{opacity:0}100%{opacity:1}}@keyframes p2{0%,32%{opacity:0}52%,82%{opacity:1}100%{opacity:0}}.f1{animation:p1 2.2s ease-in-out infinite}.f2{animation:p2 2.2s ease-in-out infinite}</style></defs><g class="f1">${f1}</g><g class="f2">${f2}</g></svg>`;
+  }
+  // STANDING FRONT VIEW helpers
+  const torso=hd(50,14)+ln(50,23,50,80);
+  const arms_neutral=ln(50,40,28,62)+ln(28,62,20,78)+ln(50,40,72,62)+ln(72,62,80,78);
+  const legs_stand=ln(44,80,38,110)+ln(38,110,34,138)+ln(56,80,62,110)+ln(62,110,66,138);
+  const stand=torso+arms_neutral+legs_stand;
+  const BL=`<line style="stroke:#94A3B8;stroke-width:4;stroke-linecap:round;fill:none" x1="8" y1="78" x2="92" y2="78"/>`;// bench line
+
+  switch(type){
+    case 'squat':
+      return mk(stand, hd(50,68)+ln(50,77,48,96)+ln(50,82,22,64)+ln(22,64,14,50)+ln(50,82,78,64)+ln(78,64,86,50)+ln(42,96,18,108)+ln(18,108,34,136)+ln(54,96,82,108)+ln(82,108,66,136));
+    case 'leg_ext':
+      return mk(hd(26,22)+ln(26,31,26,72)+ln(26,44,14,62)+ln(14,62,10,76)+ln(26,72,70,72)+ln(70,72,76,104)+ln(76,104,78,132),
+                hd(26,22)+ln(26,31,26,72)+ln(26,44,14,62)+ln(14,62,10,76)+ln(26,72,70,72)+ln(70,72,88,68)+ln(88,68,96,58));
+    case 'leg_curl':
+      return mk(hd(18,46)+ln(26,56,90,56)+ln(72,56,76,90)+ln(76,90,76,120),
+                hd(18,46)+ln(26,56,90,56)+ln(72,56,78,42)+ln(78,42,78,20));
+    case 'hinge':
+      return mk(hd(28,16)+ln(28,25,28,78)+ln(28,42,14,60)+ln(14,60,10,76)+legs_stand,
+                hd(78,46)+ln(70,52,14,78)+ln(42,66,36,90)+ln(36,90,30,116)+ln(14,78,14,114)+ln(14,114,20,140)+ln(18,78,22,114)+ln(22,114,28,140));
+    case 'calf':
+      return mk(stand,
+                hd(50,8)+ln(50,17,50,74)+ln(50,34,28,56)+ln(28,56,20,72)+ln(50,34,72,56)+ln(72,56,80,72)+ln(44,74,38,102)+ln(38,102,30,126)+ln(30,126,22,134)+ln(56,74,62,102)+ln(62,102,70,126)+ln(70,126,78,134));
+    case 'crunch':
+      return mk(hd(18,60)+ln(26,70,88,70)+ln(66,70,70,98)+ln(70,98,58,110)+ln(70,70,74,96)+ln(74,96,64,108),
+                hd(34,42)+ln(42,52,88,70)+ln(66,70,70,98)+ln(70,98,58,110)+ln(70,70,74,96)+ln(74,96,64,108));
+    case 'leg_raise':
+      return mk(hd(16,60)+ln(24,70,90,70)+ln(72,70,78,102)+ln(78,102,82,130)+ln(76,70,82,102)+ln(82,102,86,130),
+                hd(16,60)+ln(24,70,90,70)+ln(72,70,66,44)+ln(66,44,62,18)+ln(76,70,70,44)+ln(70,44,66,18));
+    case 'plank':
+      return `<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg" style="width:220px;max-width:100%;display:block;margin:0 auto;background:${bg};border-radius:16px"><style>@keyframes pu{0%,100%{opacity:1}50%{opacity:.55}}.fp{animation:pu 2s ease-in-out infinite}</style><g class="fp">${hd(82,36)+ln(72,46,14,70)+ln(26,70,26,90)+ln(26,90,8,90)+ln(14,70,16,108)+ln(16,108,24,130)+ln(16,68,18,106)+ln(18,106,26,128)}</g></svg>`;
+    case 'bench':
+      return mk(hd(82,56)+ln(72,66,14,66)+BL+ln(56,66,56,44)+ln(56,44,40,44)+wt(34,44),
+                hd(82,56)+ln(72,66,14,66)+BL+ln(56,66,46,28)+ln(46,28,38,12)+wt(36,6));
+    case 'fly':
+      return mk(hd(50,14)+ln(50,23,50,100)+ln(50,46,14,46)+ln(50,46,86,46)+legs_stand,
+                hd(50,14)+ln(50,23,50,100)+ln(50,46,36,28)+ln(36,28,28,14)+ln(50,46,64,28)+ln(64,28,72,14)+legs_stand);
+    case 'ohp':
+      return mk(torso+ln(50,40,26,46)+ln(26,46,22,36)+ln(50,40,74,46)+ln(74,46,78,36)+legs_stand,
+                torso+ln(50,40,32,22)+ln(32,22,26,6)+ln(50,40,68,22)+ln(68,22,74,6)+legs_stand);
+    case 'lateral':
+      return mk(torso+ln(50,40,34,60)+ln(34,60,26,76)+ln(50,40,66,60)+ln(66,60,74,76)+legs_stand,
+                torso+ln(50,40,16,40)+ln(16,40,4,40)+ln(50,40,84,40)+ln(84,40,96,40)+legs_stand);
+    case 'tri_push':
+      return mk(torso+ln(50,40,28,56)+ln(28,56,28,74)+ln(50,40,72,56)+ln(72,56,72,74)+legs_stand,
+                torso+ln(50,40,28,56)+ln(28,56,28,100)+ln(50,40,72,56)+ln(72,56,72,100)+legs_stand);
+    case 'skull_crusher':
+      return mk(hd(80,58)+ln(70,68,14,68)+BL+ln(54,68,54,40)+ln(54,40,54,18)+wt(54,12),
+                hd(80,58)+ln(70,68,14,68)+BL+ln(54,68,54,40)+ln(54,40,72,36)+wt(76,34));
+    case 'pulldown':
+      return mk(hd(50,30)+ln(50,39,50,82)+ln(50,50,24,26)+ln(24,26,12,12)+ln(50,50,76,26)+ln(76,26,88,12)+ln(44,82,22,96)+ln(22,96,10,110)+ln(56,82,78,96)+ln(78,96,90,110),
+                hd(50,30)+ln(50,39,50,82)+ln(50,50,24,58)+ln(24,58,16,44)+ln(50,50,76,58)+ln(76,58,84,44)+ln(44,82,22,96)+ln(22,96,10,110)+ln(56,82,78,96)+ln(78,96,90,110));
+    case 'row':
+      return mk(hd(78,36)+ln(68,42,16,76)+ln(48,60,38,84)+ln(38,84,30,104)+wt(26,108)+ln(18,76,16,112)+ln(16,112,14,140)+ln(22,76,24,112)+ln(24,112,28,140),
+                hd(78,36)+ln(68,42,16,76)+ln(48,60,52,44)+ln(52,44,62,38)+wt(66,36)+ln(18,76,16,112)+ln(16,112,14,140)+ln(22,76,24,112)+ln(24,112,28,140));
+    case 'pullover':
+      return mk(hd(22,54)+ln(30,64,90,64)+BL+ln(44,64,28,38)+ln(28,38,12,20)+wt(8,16),
+                hd(22,54)+ln(30,64,90,64)+BL+ln(44,64,44,38)+ln(44,38,44,18)+wt(44,12));
+    case 'face_pull':
+      return mk(hd(24,22)+ln(24,31,24,80)+ln(24,44,66,36)+ln(66,36,92,34)+ln(22,80,20,116)+ln(20,116,18,140)+ln(26,80,28,116)+ln(28,116,32,140),
+                hd(24,22)+ln(24,31,24,80)+ln(24,44,36,32)+ln(36,32,46,26)+ln(22,80,20,116)+ln(20,116,18,140)+ln(26,80,28,116)+ln(28,116,32,140));
+    case 'curl':
+      return mk(torso+ln(50,40,38,62)+ln(38,62,34,86)+ln(50,40,62,62)+ln(62,62,66,86)+legs_stand,
+                torso+ln(50,40,38,62)+ln(38,62,30,44)+ln(50,40,62,62)+ln(62,62,70,44)+legs_stand);
+    case 'russian_twist':
+      return mk(hd(50,28)+ln(50,37,50,80)+ln(50,52,12,48)+ln(12,48,4,46)+ln(44,80,26,104)+ln(26,104,18,128)+ln(56,80,72,104)+ln(72,104,80,128),
+                hd(50,28)+ln(50,37,50,80)+ln(50,52,88,48)+ln(88,48,96,46)+ln(44,80,26,104)+ln(26,104,18,128)+ln(56,80,72,104)+ln(72,104,80,128));
+    default: return getDemoSVG('Agachamento Livre / Leg Press');
+  }
+}
+
+function showDemo(workoutType, exIndex){
+  const ex=WK[workoutType].ex[exIndex];
+  const type=EXERCISE_MAP[ex.n]||'squat';
+  const tip=DEMO_TIPS[type]||'';
+  document.getElementById('demo-content').innerHTML=`
+    <div class="mtitle" style="font-size:17px;margin-bottom:14px">${ex.n}</div>
+    <div class="demo-svg-wrap">${getDemoSVG(ex.n)}</div>
+    ${tip?`<div class="demo-tip">${tip}</div>`:''}`;
+  document.getElementById('demo-modal').classList.add('open');
+}
+function closeDemoModal(){document.getElementById('demo-modal').classList.remove('open');}
+document.getElementById('demo-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeDemoModal();});
 
 // ─── STATE ───────────────────────────────────────────────────
 let selT=null, checked={}, pendDate='';
@@ -453,7 +605,7 @@ function showDet(t){
     let lastSec='',exHtml='';
     w.ex.forEach((e,i)=>{
       if(e.sec!==lastSec){exHtml+=`<div class="ex-section">${e.sec}</div>`;lastSec=e.sec;}
-      exHtml+=`<div class="ei" id="ei${i}" onclick="togEx(${i})"><div class="eck" id="ec${i}"></div><div><div class="en">${e.n}</div><div class="em">${e.s} séries × ${e.r}</div></div></div>`;
+      exHtml+=`<div class="ei" id="ei${i}" onclick="togEx(${i})"><div class="eck" id="ec${i}"></div><div style="flex:1"><div class="en">${e.n}</div><div class="em">${e.s} séries × ${e.r}</div></div><button class="dbtn" onclick="event.stopPropagation();showDemo('${t}',${i})">▶</button></div>`;
     });
     card.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
